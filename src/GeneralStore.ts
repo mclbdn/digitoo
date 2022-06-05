@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from "mobx";
 
 export class GeneralStoreImpl {
-  isAmountLoaded = false;
+  loadAmounts = true;
   isTermLoaded = false;
   monthlyPayment = 0;
   totalRepayableAmount = 0;
@@ -9,7 +9,7 @@ export class GeneralStoreImpl {
 
   constructor() {
     makeObservable(this, {
-      isAmountLoaded: observable,
+      loadAmounts: observable,
       isTermLoaded: observable,
       monthlyPayment: observable,
       totalRepayableAmount: observable,
@@ -22,8 +22,8 @@ export class GeneralStoreImpl {
     });
   }
 
-  setIsAmountLoaded(isAmountLoaded: boolean) {
-    this.isAmountLoaded = isAmountLoaded;
+  setIsAmountLoaded(loadAmounts: boolean) {
+    this.loadAmounts = loadAmounts;
   }
 
   setIsTermLoaded(isTermLoaded: boolean) {

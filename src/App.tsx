@@ -16,7 +16,7 @@ const App: React.FC = () => {
     const data = await response.json();
 
     AmountStore.addAmountConstraints(data.amountInterval);
-    GeneralStore.setIsAmountLoaded(true);
+    GeneralStore.setIsAmountLoaded(false);
     TermStore.addTermConstraints(data.termInterval);
     GeneralStore.setIsTermLoaded(true);
   };

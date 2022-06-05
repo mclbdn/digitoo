@@ -28,7 +28,7 @@ export class AmountStoreImpl {
   }
 
   setPossibleAmountsArray(isAmountLoaded: boolean, fetchedAmountConstraints: amountConstraintsI) {
-    if (isAmountLoaded && fetchedAmountConstraints.min && fetchedAmountConstraints.max && fetchedAmountConstraints.step) {
+    if (!isAmountLoaded && fetchedAmountConstraints.min && fetchedAmountConstraints.max && fetchedAmountConstraints.step) {
       for (let i = fetchedAmountConstraints?.min; i <= fetchedAmountConstraints?.max; i += fetchedAmountConstraints.step) {
         this.possibleAmountsArray.push(i);
       }
