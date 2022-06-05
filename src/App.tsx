@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import { Typography, Stack, Divider } from "@mui/material";
+import { Container } from "@mui/system";
+import { GeneralStore } from "./GeneralStore";
+import { TermStore } from "./TermStore";
+import Amountslider from "./components/AmountSlider";
+import TermSlider from "./components/TermSlider";
+import Result from "./components/Result";
+import { AmountStore } from "./AmountStore";
 
-function App() {
+const App: React.FC = () => {
+  const getConstraints = async () => {
+    const response = await fetch("https://js-developer-second-round.herokuapp.com/api/v1/application/constraints");
+
+    const data = await response.json();
+
+    AmountStore.addAmountConstraints(data.amountInterval);
+    GeneralStore.setIsAmountLoaded(true);
+    TermStore.addTermConstraints(data.termInterval);
+    GeneralStore.setIsTermLoaded(true);
+  };
+
+  // First, get constraints
+  useEffect(() => {
+    getConstraints();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Typography variant="h3" align="center">
+        Loan Calculator
+      </Typography>
+
+      <Stack spacing={2} divider={<Divider orientation="horizontal" />}>
+        <Amountslider generalStore={GeneralStore} amountStore={AmountStore} />
+        <TermSlider generalStore={GeneralStore} termStore={TermStore} />
+        <Result generalStore={GeneralStore} termStore={TermStore} amountStore={AmountStore} />
+      </Stack>
+    </Container>
   );
-}
+};
 
 export default App;
